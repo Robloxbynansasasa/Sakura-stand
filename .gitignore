@@ -1,21 +1,12 @@
-local TeleportService = game:GetService("TeleportService")
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+repeat task.wait() until game.CoreGui:FindFirstChild('RobloxPromptGui')
 
--- Function to trigger rejoin
-local function rejoin()
-    local placeId = game.PlaceId
-    local serverId = game.JobId -- Keeps them in the same server if slots are open
-    
-    if serverId == "" then
-        -- JobId is empty in Roblox Studio, this line handles matchmaking
-        TeleportService:Teleport(placeId, player)
-    else
-        -- Teleports the player back into the exact same server instance
-        TeleportService:TeleportToPlaceInstance(placeId, serverId, player)
+local lp,po,ts = game:GetService('Players').LocalPlayer,game.CoreGui.RobloxPromptGui.promptOverlay,game:GetService('TeleportService')
+
+po.ChildAdded:connect(function(a)
+    if a.Name == 'ErrorPrompt' then
+        while true do
+            ts:Teleport(game.PlaceId)
+            task.wait(1)
+        end
     end
-end
-
--- Example: Trigger rejoin when button is clicked
--- script.Parent.MouseButton1Click:Connect(rejoin)
-
+end)
