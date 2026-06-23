@@ -1,1 +1,21 @@
-humannoid
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- Function to trigger rejoin
+local function rejoin()
+    local placeId = game.PlaceId
+    local serverId = game.JobId -- Keeps them in the same server if slots are open
+    
+    if serverId == "" then
+        -- JobId is empty in Roblox Studio, this line handles matchmaking
+        TeleportService:Teleport(placeId, player)
+    else
+        -- Teleports the player back into the exact same server instance
+        TeleportService:TeleportToPlaceInstance(placeId, serverId, player)
+    end
+end
+
+-- Example: Trigger rejoin when button is clicked
+-- script.Parent.MouseButton1Click:Connect(rejoin)
+
